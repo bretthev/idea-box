@@ -4,7 +4,7 @@ var $saveButton = $('.save');             // call save btn
 
 // creates container element
 function makeIdeaCard() {
-  $('.idea-list').prepend('<article id="'+idGenerator()+'" class="idea-card"><h2>' + $titleInput.val() + '</h2><button class="remove-idea">REMOVE</button><p>' + $bodyInput.val() + '</p><button class="upvote">UPVOTE</button><button class="downvote">DOWNVOTE</button></article>');
+  $('.idea-list').prepend('<article id="#'+idGenerator()+'" class="idea-card"><h2>' + $titleInput.val() + '</h2><button class="remove-idea">REMOVE</button><p>' + $bodyInput.val() + '</p><button class="upvote">UPVOTE</button><button class="downvote">DOWNVOTE</button></article>');
 }
 
 // removes container
@@ -21,3 +21,15 @@ $($saveButton).on('click', makeIdeaCard);
 function idGenerator() {
   return Date.now().toString();
 }
+
+// associative array (AKA: hash or dictonary) to hold card-objects
+var ideas = {};
+
+// makes each article an object and stores it in 'ideas'
+function addIdea() {
+  var key = $('article').attr("id");
+  ideas[key] = {id: $('article').attr("id"), title: $titleInput.val(), body: $bodyInput.val(), ranking: "swill"}
+}
+
+// calls addIdea on click
+$($saveButton).on('click', addIdea);
