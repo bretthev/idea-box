@@ -23,7 +23,7 @@ function populateDOM() {
 }
 
 function Idea(id, title, body, quality) {
-  this.id = id;
+  this.id = parseInt(id);
   this.title = title;
   this.body = body;
   this.quality = quality;
@@ -61,7 +61,7 @@ function makeNewIdea() {
 
 //add the stuff to the dom
 function makeIdeaCard(id, title, body) {
-  $('.idea-list').prepend('<article id="#'+ id +'" class="idea-card"><h2>' + title + '</h2><button class="remove-idea">REMOVE</button><p>' + body + '</p><button class="upvote">UPVOTE</button><button class="downvote">DOWNVOTE</button><p class = "idea-quality">Quality: Swill</p></article>');
+  $('.idea-list').prepend('<article id="'+ id +'" class="idea-card"><h2>' + title + '</h2><button class="remove-idea">REMOVE</button><p>' + body + '</p><button class="upvote">UPVOTE</button><button class="downvote">DOWNVOTE</button><p class = "idea-quality">Quality: Swill</p></article>');
 }
 
 $($saveButton).on('click', makeNewIdea);
@@ -73,9 +73,8 @@ function idGenerator() {
 
 // removes container, but we also need it to remove the idea with this particular id from the ideas array
 function removeParent() {
-  debugger;
   var ideaArticle = $(this).parent();
-  var idWeWantToDeleteFromStorage = $(this).parent().id;
+  var idWeWantToDeleteFromStorage = parseInt($(this).parent().attr("id"));
   // grab id and shove into function -> deleteStuff(idea.id)
   deleteIdeaFromStorage(idWeWantToDeleteFromStorage);
   ideaArticle.remove();
@@ -83,10 +82,8 @@ function removeParent() {
 
 function deleteIdeaFromStorage(toBeDeleteID) {
   var currentIdeas = getIdeas();
-  currentIdeas.forEach(function(idea, index) {
-    if (idea.id === parseInt(toBeDeleteID)) {
-      currentIdeas.splice(index, 1);
-    };
+  currentIdeas = currentIdeas.filter(function(idea, index) {
+    return idea.id !== parseInt(toBeDeleteID)
   });
   localStorage.setItem("ideas", JSON.stringify(currentIdeas));
 };
