@@ -3,7 +3,14 @@ var $bodyInput = $('.body-input');        // call body input field
 var $saveButton = $('.save');             // call save btn
 var ideas = [];
 
-//When the page loads, document.ready, we need a function to check for stored ideas from the ideas array and put them up
+//When the page loads, we need a function to check for stored ideas from the ideas array and put them up
+function setUpPage() {
+  debugger;
+  var ideasFromStorage = JSON.parse(localStorage.getItem('ideasArray'));
+  ideas.push(ideasFromStorage);
+};
+
+setUpPage();
 
 function Idea(id, title, body, quality) {
   this.id = id;
@@ -63,7 +70,7 @@ function idGenerator() {
 //   ideas[key] = {id: $('article').attr("id"), title: $titleInput.val(), body: $bodyInput.val(), ranking: "swill"}
 // }
 
-// removes container
+// removes container, but we also need it to remove the idea with this particular id from the ideas array, also
 function removeParent() {
   $(this).parent().remove();
 }
