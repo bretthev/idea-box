@@ -1,7 +1,7 @@
 var $titleInput = $('.title-input');      // call title input field
 var $bodyInput = $('.body-input');        // call body input field
 var $saveButton = $('.save');             // call save btn
-var ideas = {};
+var ideas = [];
 
 //When the page loads, document.ready, we need a function to check for stored ideas from the ideas array and put them up
 
@@ -27,21 +27,22 @@ function getBodyInput() {
 function makeNewIdea() {
   debugger;
   var newIdea = new Idea(idGenerator(), getTitleInput(), getBodyInput(), 'Swill')
-  var id = newIdea.id
-  //change that idea object into a storable string and set in local storage
-  // storeNewIdeaAsString();
-  // function storeNewIdeaAsString() {
-  // localStorage.setItem('stringifiedNewIdea', JSON.stringify(newIdea))};
-  //we also have to push them to the ideas array
-
+  var newId = newIdea.id;
+  var newTitle = newIdea.title;
+  var newBody = newIdea.body;
+  //push that idea object into the idea array
+  ideas.push(newIdea);
+  //stringify the ideas array and store it locally
+  localStorage.setItem('ideasArray', JSON.stringify(ideas));
   //finally, add that thing to the dom
-  makeIdeaCard(id);
+  makeIdeaCard(newId, newTitle, newBody);
 };
 
 
+
 //add the stuff to the dom
-function makeIdeaCard(id) {
-  $('.idea-list').prepend('<article id="#'+id+'" class="idea-card"><h2>' + $titleInput.val() + '</h2><button class="remove-idea">REMOVE</button><p>' + $bodyInput.val() + '</p><button class="upvote">UPVOTE</button><button class="downvote">DOWNVOTE</button><p class = "idea-quality">Quality: Swill</p></article>');
+function makeIdeaCard(x, y, z) {
+  $('.idea-list').prepend('<article id="#'+ x +'" class="idea-card"><h2>' + y + '</h2><button class="remove-idea">REMOVE</button><p>' + z + '</p><button class="upvote">UPVOTE</button><button class="downvote">DOWNVOTE</button><p class = "idea-quality">Quality: Swill</p></article>');
 }
 
 
