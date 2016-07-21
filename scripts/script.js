@@ -1,16 +1,26 @@
 var $titleInput = $('.title-input');      // call title input field
 var $bodyInput = $('.body-input');        // call body input field
 var $saveButton = $('.save');             // call save btn
-var ideas = [];
 
-//When the page loads, we need a function to check for stored ideas from the ideas array and put them up
-function setUpPage() {
-  debugger;
-  var ideasFromStorage = JSON.parse(localStorage.getItem('ideasArray'));
-  ideas.push(ideasFromStorage);
+onLoad();
+
+function onLoad() {
+  checkLocalOrMakeLocal();
+  populateDOM();
 };
 
-setUpPage();
+function checkLocalOrMakeLocal() {
+  if (localStorage.getItem("ideas") === null) {
+    localStorage.setItem("ideas", JSON.stringify([]))
+  };
+};
+
+function populateDOM() {
+  var ideas = getIdeas();
+  ideas.forEach(function(idea) {
+    makeIdeaCard(idea.id, idea.title, idea.body);
+  });
+}
 
 function Idea(id, title, body, quality) {
   this.id = id;
@@ -25,55 +35,66 @@ function getTitleInput() {
   return ideaTitle;
 };
 
+
 function getBodyInput() {
   var ideaBody = $bodyInput.val();
   return ideaBody;
-}
+};
+
+function getIdeas() {
+  return JSON.parse(localStorage.getItem("ideas"));
+};
 
 //put that input stuff into an idea object;
 function makeNewIdea() {
-  debugger;
   var newIdea = new Idea(idGenerator(), getTitleInput(), getBodyInput(), 'Swill')
-  var newId = newIdea.id;
-  var newTitle = newIdea.title;
-  var newBody = newIdea.body;
   //push that idea object into the idea array
-  ideas.push(newIdea);
+  currentIdeas = getIdeas();
+  currentIdeas.push(newIdea);
   //stringify the ideas array and store it locally
-  localStorage.setItem('ideasArray', JSON.stringify(ideas));
+  localStorage.setItem('ideas', JSON.stringify(currentIdeas));
   //finally, add that thing to the dom
-  makeIdeaCard(newId, newTitle, newBody);
+  makeIdeaCard(newIdea.id, newIdea.title, newIdea.body);
 };
 
 
 
 //add the stuff to the dom
-function makeIdeaCard(x, y, z) {
-  $('.idea-list').prepend('<article id="#'+ x +'" class="idea-card"><h2>' + y + '</h2><button class="remove-idea">REMOVE</button><p>' + z + '</p><button class="upvote">UPVOTE</button><button class="downvote">DOWNVOTE</button><p class = "idea-quality">Quality: Swill</p></article>');
+function makeIdeaCard(id, title, body) {
+  $('.idea-list').prepend('<article id="#'+ id +'" class="idea-card"><h2>' + title + '</h2><button class="remove-idea">REMOVE</button><p>' + body + '</p><button class="upvote">UPVOTE</button><button class="downvote">DOWNVOTE</button><p class = "idea-quality">Quality: Swill</p></article>');
 }
 
-
-// calls addIdea on click
-// $($saveButton).on('click', addIdea);
-
-// calls makeIdeaCard which creates element
 $($saveButton).on('click', makeNewIdea);
 
 // creates unique ID (millisecond time-stamp)
 function idGenerator() {
   return Date.now().toString();
-}
+};
 
-// makes each article an object and stores it in 'ideas'
-// function addIdea() {
-//   var key = $('article').attr("id");
-//   ideas[key] = {id: $('article').attr("id"), title: $titleInput.val(), body: $bodyInput.val(), ranking: "swill"}
-// }
-
-// removes container, but we also need it to remove the idea with this particular id from the ideas array, also
+// removes container, but we also need it to remove the idea with this particular id from the ideas array
 function removeParent() {
-  $(this).parent().remove();
-}
+  debugger;
+  var ideaArticle = $(this).parent();
+  var idWeWantToDeleteFromStorage = $(this).parent().id;
+  // grab id and shove into function -> deleteStuff(idea.id)
+  deleteIdeaFromStorage(idWeWantToDeleteFromStorage);
+  ideaArticle.remove();
+};
+
+function deleteIdeaFromStorage(toBeDeleteID) {
+  var currentIdeas = getIdeas();
+  currentIdeas.forEach(function(idea, index) {
+    if (idea.id === parseInt(toBeDeleteID)) {
+      currentIdeas.splice(index, 1);
+    };
+  });
+  localStorage.setItem("ideas", JSON.stringify(currentIdeas));
+};
+
+function findIdeaById(id) {
+  return ideas.id === this.id;
+};
+
 // calls removeParent when clicked
 $('.idea-list').on('click', '.remove-idea', removeParent);
 
