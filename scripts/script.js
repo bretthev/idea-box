@@ -3,14 +3,13 @@ var $bodyInput = $('.body-input');        // call body input field
 var $saveButton = $('.save');             // call save btn
 var ideas = {};
 
-//When the page loads, document.ready, we need a function to check for locally stored ideas and immediately put them up
-
+//When the page loads, document.ready, we need a function to check for stored ideas from the ideas array and put them up
 
 function Idea(id, title, body, quality) {
-  id = this.id;
-  title = this.title;
-  body = this.body;
-  quality = this.quality;
+  this.id = id;
+  this.title = title;
+  this.body = body;
+  this.quality = quality;
 };
 //when they click the save button, we have to
 //get the input stuff;
@@ -26,29 +25,31 @@ function getBodyInput() {
 
 //put that input stuff into an idea object;
 function makeNewIdea() {
-  getTitleInput();
-  getBodyInput();
-  var newIdea = new Idea(idGenerator(), ideaTitle, ideaBody, 'Swill')
-  return newIdea;
-};
-//change that idea object into a storable string
-//make newIdea into a string with JSON stringify
-//store the string in local storage
-//use local storage to set the newIdea string to local storage
+  debugger;
+  var newIdea = new Idea(idGenerator(), getTitleInput(), getBodyInput(), 'Swill')
+  var id = newIdea.id
+  //change that idea object into a storable string and set in local storage
+  // storeNewIdeaAsString();
+  // function storeNewIdeaAsString() {
+  // localStorage.setItem('stringifiedNewIdea', JSON.stringify(newIdea))};
+  //we also have to push them to the ideas array
 
+  //finally, add that thing to the dom
+  makeIdeaCard(id);
+};
 
 
 //add the stuff to the dom
-function makeIdeaCard() {
-  $('.idea-list').prepend('<article id="#'+idGenerator()+'" class="idea-card"><h2>' + $titleInput.val() + '</h2><button class="remove-idea">REMOVE</button><p>' + $bodyInput.val() + '</p><button class="upvote">UPVOTE</button><button class="downvote">DOWNVOTE</button></article>');
+function makeIdeaCard(id) {
+  $('.idea-list').prepend('<article id="#'+id+'" class="idea-card"><h2>' + $titleInput.val() + '</h2><button class="remove-idea">REMOVE</button><p>' + $bodyInput.val() + '</p><button class="upvote">UPVOTE</button><button class="downvote">DOWNVOTE</button><p class = "idea-quality">Quality: Swill</p></article>');
 }
 
 
 // calls addIdea on click
-$($saveButton).on('click', addIdea);
+// $($saveButton).on('click', addIdea);
 
 // calls makeIdeaCard which creates element
-$($saveButton).on('click', makeIdeaCard);
+$($saveButton).on('click', makeNewIdea);
 
 // creates unique ID (millisecond time-stamp)
 function idGenerator() {
@@ -56,10 +57,10 @@ function idGenerator() {
 }
 
 // makes each article an object and stores it in 'ideas'
-function addIdea() {
-  var key = $('article').attr("id");
-  ideas[key] = {id: $('article').attr("id"), title: $titleInput.val(), body: $bodyInput.val(), ranking: "swill"}
-}
+// function addIdea() {
+//   var key = $('article').attr("id");
+//   ideas[key] = {id: $('article').attr("id"), title: $titleInput.val(), body: $bodyInput.val(), ranking: "swill"}
+// }
 
 // removes container
 function removeParent() {
@@ -67,11 +68,6 @@ function removeParent() {
 }
 // calls removeParent when clicked
 $('.idea-list').on('click', '.remove-idea', removeParent);
-
-
-
-
-
 
 // fxn increases idea's ranking
 function upRank() {
