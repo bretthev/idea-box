@@ -33,3 +33,33 @@ function addIdea() {
 
 // calls addIdea on click
 $($saveButton).on('click', addIdea);
+
+// fxn increases idea's ranking
+function upRank() {
+  if (ideas[$('article').attr("id")].ranking === "plausible") {return ideas[$('article').attr("id")].ranking = "genius"; }
+  else if
+    (ideas[$('article').attr("id")].ranking === "genius") {
+      return ideas[$('article').attr("id")].ranking = "genius";
+  }
+  else {
+    ideas[$('article').attr("id")].ranking = "plausible";
+  }
+}
+
+// calls upRank on click
+$('.idea-list').on('click', '.upvote', upRank);
+
+// fxn decreases idea's ranking
+function downRank() {
+  if (ideas[$('article').attr("id")].ranking === "plausible") {return ideas[$('article').attr("id")].ranking = "genius"; }
+  else if
+    (ideas[$('article').attr("id")].ranking === "genius") {
+      return ideas[$('article').attr("id")].ranking = "genius";
+  }
+  else {
+    ideas[$('article').attr("id")].ranking = "plausible";
+  }
+}
+
+// // calls downRank on click
+// $('.idea-list').on('click', '.downvote', downRank);
