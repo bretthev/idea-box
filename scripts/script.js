@@ -51,15 +51,15 @@ $('.idea-list').on('click', '.upvote', upRank);
 
 // fxn decreases idea's ranking
 function downRank() {
-  if (ideas[$('article').attr("id")].ranking === "plausible") {return ideas[$('article').attr("id")].ranking = "genius"; }
+  if (ideas[$('article').attr("id")].ranking === "genius") {return ideas[$('article').attr("id")].ranking = "plausible"; }
   else if
-    (ideas[$('article').attr("id")].ranking === "genius") {
-      return ideas[$('article').attr("id")].ranking = "genius";
+    (ideas[$('article').attr("id")].ranking === "plausible") {
+      return ideas[$('article').attr("id")].ranking = "swill";
   }
   else {
-    ideas[$('article').attr("id")].ranking = "plausible";
+    ideas[$('article').attr("id")].ranking = "swill";
   }
 }
 
-// // calls downRank on click
-// $('.idea-list').on('click', '.downvote', downRank);
+// calls downRank on click
+$('.idea-list').on('click', '.downvote', downRank);
