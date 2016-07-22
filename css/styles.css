@@ -15,6 +15,10 @@ h1 {
   color: #00A79D;
 }
 
+.grey-h1 {
+  color: #6D6E71;
+}
+
 input {
   width: 60%;
   margin: auto;
@@ -50,4 +54,32 @@ button:hover{
 }
 .idea-card h2 {
   font-size: 3em;
+}
+
+h2 {
+  color: #6D6E71
+}
+
+p {
+  color: #939598
+}
+
+.idea-quality {
+  color: #6D6E71
+}
+
+hr {
+  color: #D1D3D4
+}
+
+.remove-idea:hover {
+  /* How do I source 'images/delete-hover.svg'? */
+}
+
+.upvote:hover {
+
+}
+
+.downvote:hover {
+  
 }
