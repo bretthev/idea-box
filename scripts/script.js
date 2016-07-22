@@ -61,7 +61,7 @@ function makeNewIdea() {
 
 //add the stuff to the dom
 function makeIdeaCard(id, title, body) {
-  $('.idea-list').prepend('<article id="'+ id +'" class="idea-card"><h2>' + title + '</h2><button class="remove-idea"><img src="images/delete.svg">Remove</button><p>' + body + '</p><button class="upvote"><img src="images/upvote.svg">UPVOTE</button><button class="downvote"><img src="images/downvote.svg">DOWNVOTE</button><p class = "idea-quality">Quality: Swill</p></article><hr>');
+  $('.idea-list').prepend('<article id="'+ id +'" class="idea-card"><h2>' + title + '</h2><button class="remove-idea"></button><p>' + body + '</p><button class="upvote"></button><button class="downvote"></button><p class = "idea-quality">Quality: Swill</p></article><hr>');
 }
 
 $($saveButton).on('click', makeNewIdea);
