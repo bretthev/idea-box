@@ -72,14 +72,44 @@ hr {
   color: #D1D3D4
 }
 
+.remove-idea {
+  background: url(../images/delete.svg) no-repeat;
+  border: none;
+  height: 20px;
+  width: 20px;
+}
+
 .remove-idea:hover {
-  /* How do I source 'images/delete-hover.svg'? */
+  background: url(../images/delete-hover.svg) no-repeat;
+  border: none;
+  height: 20px;
+  width: 20px;
+}
+
+.upvote {
+  background: url(../images/upvote.svg) no-repeat;
+  border: none;
+  height: 20px;
+  width: 20px;
 }
 
 .upvote:hover {
+  background: url(../images/upvote-hover.svg) no-repeat;
+  border: none;
+  height: 20px;
+  width: 20px;
+}
 
+.downvote {
+  background: url(../images/downvote.svg) no-repeat;
+  border: none;
+  height: 20px;
+  width: 20px;
 }
 
 .downvote:hover {
-  
+  background: url(../images/downvote-hover.svg) no-repeat;
+  border: none;
+  height: 20px;
+  width: 20px;
 }
