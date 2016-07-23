@@ -35,14 +35,9 @@ function getTitleInput() {
   return ideaTitle;
 };
 
-
 function getBodyInput() {
   var ideaBody = $bodyInput.val();
   return ideaBody;
-};
-
-function getIdeas() {
-  return JSON.parse(localStorage.getItem("ideas"));
 };
 
 //put that input stuff into an idea object;
@@ -58,11 +53,28 @@ function makeNewIdea() {
 };
 
 
+function getIdeas() {
+  return JSON.parse(localStorage.getItem("ideas"));
+};
 
 //add the stuff to the dom
 function makeIdeaCard(id, title, body) {
-  $('.idea-list').prepend('<article id="'+ id +'" class="idea-card"><h2>' + title + '</h2><button class="remove-idea"></button><p>' + body + '</p><button class="upvote"></button><button class="downvote"></button><p class = "idea-quality">Quality: Swill</p></article><hr>');
+  $('.idea-list').prepend('<article id="'+ id +'" class="idea-card"><h2 class="editable" contenteditable="true">' + title + '</h2><button class="remove-idea"><img src="images/delete.svg"></button><p class="editable" contenteditable="true">' + body + '</p><button class="upvote"><img src="images/upvote.svg"></button><button class="downvote"><img src="images/downvote.svg"></button><p class= "idea-quality">Quality: Swill</p></article>');
 }
+
+$('.idea-list').on('focusout', '.editable', function() {
+  debugger;
+  var editedIdeaArticle = $(this).closest('.idea-card');
+  var editedIdeaId = parseInt(editedIdeaArticle.attr('id'));
+  var editedIdeaTitle = editedIdeaArticle.find('h2.editable').text();
+  var editedIdeaBody = editedIdeaArticle.find('p.editable').text();
+  deleteIdeaFromStorage(editedIdeaId);
+  var editedIdea = new Idea(editedIdeaId, editedIdeaTitle, editedIdeaBody);
+  var currentIdeas = getIdeas();
+  currentIdeas.push(editedIdea);
+  localStorage.setItem("ideas", JSON.stringify(currentIdeas));
+});
+
 
 $($saveButton).on('click', makeNewIdea);
 
@@ -86,10 +98,6 @@ function deleteIdeaFromStorage(toBeDeleteID) {
     return idea.id !== parseInt(toBeDeleteID)
   });
   localStorage.setItem("ideas", JSON.stringify(currentIdeas));
-};
-
-function findIdeaById(id) {
-  return ideas.id === this.id;
 };
 
 // calls removeParent when clicked
