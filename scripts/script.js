@@ -58,21 +58,15 @@ function getIdeas() {
 };
 
 //add the stuff to the dom
-function makeIdeaCard(id, title, body) {
+function makeIdeaCard(id, title, body, quality) {
   $('.idea-list').prepend(`
-    <article id="${this.id}" class="idea-card">
-      <section class="title-removeBtn">
-        <h2 class="editable" contenteditable="true">${this.title}</h2>
-        <button class="remove-idea"></button>
-      </section>
-
-      <p class="editable" contenteditable="true">${this.body}</p>
-
-      <section class="vote-panel">
-        <button class="upvote"></button>
-        <button class="downvote"></button>
-        <p class= "idea-quality">Quality: Swill</p>
-      </section>
+    <article id="`+ id +`" class="idea-card">
+      <h2 class="editable" contenteditable="true">` + title + `</h2>
+      <button class="remove-idea"><img src="images/delete.svg"></button>
+      <p class="editable" contenteditable="true">` + body + `</p>
+      <button class="upvote"><img src="images/upvote.svg"></button>
+      <button class="downvote"><img src="images/downvote.svg"></button>
+      <p class= "idea-quality">Quality:` + quality + ` </p>
     </article>`);
 }
 
