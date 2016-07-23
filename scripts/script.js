@@ -68,7 +68,7 @@ function makeIdeaCard(id, title, body, quality) {
 }
 
 $('.idea-list').on('keyup', '.editable', updateEverything);
-$('.idea-card').on('click', 'button', updateEverything);
+$('.idea-list').on('focusout', 'button', updateEverything);
 
 
 function updateEverything() {
@@ -126,7 +126,6 @@ function downVote() {
   var ideaQuality = ideaArticle.find('.quality-in-DOM').text();
   if (ideaQuality === 'Genius') {ideaArticle.find('.quality-in-DOM').text('Plausible')};
   if (ideaQuality === 'Plausible') {ideaArticle.find('.quality-in-DOM').text('Swill')};
-  updateEverything();
 };
 
 //this needs to grab the text value of the quality-in-DOM field and make it this object's quality attr
