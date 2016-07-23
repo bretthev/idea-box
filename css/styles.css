@@ -1,4 +1,5 @@
 .hero {
+  font-family: 'Roboto Slab', serif;
   display: flex;
   flex-direction: column;
   height: 300px;
