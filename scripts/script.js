@@ -72,7 +72,6 @@ $('.idea-list').on('focusout', 'button', updateEverything);
 
 
 function updateEverything() {
-  debugger;
   var editedIdeaArticle = $(this).closest('.idea-card');
   var editedIdeaId = parseInt(editedIdeaArticle.attr('id'));
   var editedIdeaTitle = editedIdeaArticle.find('h2.editable').text();
