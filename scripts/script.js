@@ -10,17 +10,19 @@ function onLoad() {
 };
 
 function checkLocalOrMakeLocal() {
-  if (localStorage.getItem("ideas") === null) {
+  debugger;
+  if (localStorage.getItem("ideas") === []) {
     localStorage.setItem("ideas", JSON.stringify([]))
   };
 };
 
 function populateDOM() {
+  debugger;
   var ideas = getIdeas();
   ideas.forEach(function(idea) {
     makeIdeaCard(idea.id, idea.title, idea.body, idea.quality);
   });
-}
+};
 
 function Idea(id, title, body, quality) {
   this.id = parseInt(id);
@@ -61,17 +63,18 @@ function makeIdeaCard(id, title, body, quality) {
       <h2 class="editable" contenteditable="true">` + title + `</h2>
       <button class="remove-idea"></button>
       <p class="editable" contenteditable="true">` + body + `</p>
-      <button class="upvote"></button>
-      <button class="downvote"></button>
+      <button class="upvote quality-button"></button>
+      <button class="downvote quality-button"></button>
       <p class= "idea-quality ` + quality +`"><span>Quality:</span> <span class = "quality-in-DOM">` + quality + `</span> </p>
     </article>`);
-}
+};
 
 $('.idea-list').on('keyup', '.editable', updateEverything);
-$('.idea-list').on('focusout', 'button', updateEverything);
+$('.idea-list').on('focusout', '.quality-button', updateEverything);
 
 
 function updateEverything() {
+  debugger;
   var editedIdeaArticle = $(this).closest('.idea-card');
   var editedIdeaId = parseInt(editedIdeaArticle.attr('id'));
   var editedIdeaTitle = editedIdeaArticle.find('h2.editable').text();
@@ -91,10 +94,11 @@ function idGenerator() {
 };
 
 function removeParent() {
-  var ideaArticle = $(this).parent();
-  var idWeWantToDeleteFromStorage = parseInt($(this).parent().attr("id"));
+  var ideaArticle = $(this).closest('.idea-card');
+  var idWeWantToDeleteFromStorage = parseInt(ideaArticle.attr("id"));
   deleteIdeaFromStorage(idWeWantToDeleteFromStorage);
   ideaArticle.remove();
+  // updateEverything();
 };
 
 function deleteIdeaFromStorage(toBeDeleteID) {
