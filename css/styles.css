@@ -1,11 +1,11 @@
-header {
+.hero {
   display: flex;
   flex-direction: column;
   height: 300px;
   background-color:#E5F3F2;
 }
 
-h1 {
+.hero-title {
   margin: auto;
   margin-top: 5%;
   font-size: 3em;
@@ -19,7 +19,7 @@ h1 {
   color: #6D6E71;
 }
 
-input {
+.title-input, .body-input {
   width: 60%;
   margin: auto;
   height: 10%;
@@ -68,10 +68,6 @@ p {
   color: #6D6E71
 }
 
-hr {
-  color: #D1D3D4
-}
-
 .remove-idea {
   background: url(../images/delete.svg) no-repeat;
   border: none;
@@ -113,39 +109,3 @@ hr {
   height: 20px;
   width: 20px;
 }
-
-.idea-card {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  width: 30em;
-}
-
-.idea-card {
-  display:-webkit-box;
-  display:-ms-flexbox;
-  display:flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-@media (max-width: 600px) {
-  html {
-    min-width: 300px;
-  }
-  .idea-input-header h1 {
-    margin-top: 15px;
-    margin-bottom: 0;
-  }
