@@ -82,7 +82,7 @@ function makeIdeaCard(id, title, body, quality) {
     <article id="`+ id +`" class="idea-card">
       <h2 class="editable" contenteditable="true">` + title + `</h2>
       <button class="remove-idea"></button>
-      <p class="editable" contenteditable="true">` + body + `</p>
+      <p class="editable idea-body" contenteditable="true">` + body + `</p>
       <button class="upvote quality-button"></button>
       <button class="downvote quality-button"></button>
       <p class= "idea-quality ` + quality +`"><span>Quality:</span> <span class = "quality-in-DOM">` + quality + `</span> </p>
