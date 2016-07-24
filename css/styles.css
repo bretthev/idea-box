@@ -1,32 +1,34 @@
 .hero {
-  font-family: 'Roboto Slab', serif;
+  background-color:#E5F3F2;
   display: flex;
   flex-direction: column;
   height: 300px;
-  background-color:#E5F3F2;
 }
 
 .hero-title {
+  font-family: 'Roboto Slab', serif;
+  font-size: 3em;
+  font-weight: bold;
   margin: auto;
   margin-top: 5%;
-  font-size: 3em;
 }
 
 .green-h1 {
   color: #00A79D;
+  /*padding-bottom: 10px;*/
 }
 
 .grey-h1 {
   color: #6D6E71;
+  /*padding-bottom: 10px;*/
 }
 
 .title-input, .body-input {
-  width: 60%;
   font-size: 100%;
   height: 1.5em;
   margin: auto;
-  margin-bottom: 1%;
   text-indent: 10px;
+  width: 60%;
 }
 
 .search-field {
@@ -35,34 +37,26 @@
   font-size: 100%;
   height: 1.5em;
   margin: auto;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  margin-top: 20px;
+  margin-bottom: 15px;
   text-indent: 10px;
   width: 60%;
 }
 
-.save:hover{
+.save:hover {
   background: #045E55;
 }
-
 .save {
   background: #00A79D;
   border: none;
   color: #FFFFFF;
   font-size: 100%;
-  height: 10%;
+  height: 1.8em;
   margin: auto;
-  margin-bottom: 3%;
+  margin-bottom: 5%;
   width: 60%;
 };
 
-/*
-.idea-list {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin-bottom: 5px;
-}*/
 
 .idea-card {
   border-bottom: 2px solid #D1D3D4;
@@ -77,12 +71,16 @@
 }
 .idea-card h2 {
   font-size: 3em;
-  position: relative;
+}
+
+h2 {
+  font-family: 'Roboto Slab', serif;
 }
 
 .editable {
   color: #939598;
   display: inline-block;
+  font-family: 'Open Sans', sans-serif;
   padding-bottom: 15px;
 }
 
