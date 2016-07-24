@@ -6,6 +6,11 @@
   background-color:#E5F3F2;
 }
 
+textarea {
+  border: none;
+  resize: none;
+}
+
 .hero-title {
   margin: auto;
   margin-top: 5%;
@@ -22,15 +27,19 @@
 
 
 .title-input, .body-input {
+  border: 2px solid #D1D3D4;
   width: 60%;
   font-size: 100%;
   height: 2em;
   margin: auto;
   margin-bottom: 1%;
   text-indent: 10px;
+  line-height: 2em;
 }
 
+
 .search-field {
+  border: 2px solid #D1D3D4;
   display: flex;
   flex-direction: column;
   font-size: 100%;
@@ -58,7 +67,7 @@
 };
 
 
-article {
+article{
   width: 60%;
 }
 
@@ -87,6 +96,7 @@ article {
 .editable {
   color: #939598;
   display: inline-block;
+  outline: 0px solid transparent;
   padding-bottom: 15px;
 }
 
@@ -146,4 +156,25 @@ article {
 .idea-quality {
   display: absolute;
   margin: auto;
+}
+
+@media screen and (max-width: 600px){
+  .title-input {
+    width: 90%;
+    height: 10%;
+  }
+  .body-input {
+    width: 90%;
+    height: 30%;
+  }
+  .save {
+    width: 90%;
+  }
+  .search-field {
+    width: 90%;
+  }
+  article.idea-card {
+    width: 90%;
+  }
+
 }
