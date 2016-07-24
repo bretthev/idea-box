@@ -2,6 +2,8 @@ var $titleInput = $('.title-input');      // call title input field
 var $bodyInput = $('.body-input');        // call body input field
 var $saveButton = $('.save');
 
+//setup page with ideas from local Storage
+
 onLoad();
 
 function onLoad() {
@@ -22,14 +24,26 @@ function populateDOM() {
   });
 };
 
+function getIdeas() {
+  return JSON.parse(localStorage.getItem("ideas"));
+};
+
+//this is what an idea is.
+
 function Idea(id, title, body, quality) {
   this.id = parseInt(id);
   this.title = title;
   this.body = body;
   this.quality = quality;
 };
-//when they click the save button, we have to
-//get the input stuff;
+
+//function for generating a random id
+function idGenerator() {
+  return Date.now().toString();
+};
+
+//grab inputs from the title and body fields
+
 function getTitleInput() {
   var ideaTitle = $titleInput.val();
   return ideaTitle;
@@ -44,23 +58,25 @@ function getSearchInput() {
   var searchInput = $('.search-field').val();
   return searchInput;
 };
-//put that input stuff into an idea object;
+
+//put that input stuff into an idea object, also makes a new idea card in DOM
 function makeNewIdea() {
   var newIdea = new Idea(idGenerator(), getTitleInput(), getBodyInput(), 'Swill')
   currentIdeas = getIdeas();
   currentIdeas.push(newIdea);
   localStorage.setItem('ideas', JSON.stringify(currentIdeas));
   makeIdeaCard(newIdea.id, newIdea.title, newIdea.body, 'Swill');
+  clearInputFields();
 };
 
+$($saveButton).on('click', makeNewIdea);
 
-function getIdeas() {
-  return JSON.parse(localStorage.getItem("ideas"));
-};
+function clearInputFields() {
+  $titleInput.val('');
+  $bodyInput.val('');
+}
 
-
-
-//add the stuff to the dom
+//puts idea cardss in the dom
 function makeIdeaCard(id, title, body, quality) {
   $('.idea-list').prepend(`
     <article id="`+ id +`" class="idea-card">
@@ -73,10 +89,12 @@ function makeIdeaCard(id, title, body, quality) {
     </article>`);
 };
 
+//update storage when stuff is edited/clicked in the dom
 $('.idea-list').on('keyup', '.editable', updateEverything);
 
 $('.idea-list').on('blur', '.quality-button', updateEverything);
 
+//when a user edits an idea in the dom, this function makes sure those changes are reflected in storage
 function updateEverything() {
   var editedIdeaArticle = $(this).closest('.idea-card');
   var editedIdeaId = parseInt(editedIdeaArticle.attr('id'));
@@ -90,11 +108,17 @@ function updateEverything() {
   localStorage.setItem("ideas", JSON.stringify(currentIdeas));
 };
 
-$($saveButton).on('click', makeNewIdea);
+//focuses out when they press enter in the editable fields
+$('.idea-card').on('keydown', $('.editable'), function(e) {
+   if(e.keyCode == 13)
+   {
+       e.preventDefault();
+       $(':focus').blur();
+   };
+});
 
-function idGenerator() {
-  return Date.now().toString();
-};
+//removes ideas from the DOM AND storage
+$('.idea-list').on('click', '.remove-idea', removeParent);
 
 function removeParent() {
   var ideaArticle = $(this).closest('.idea-card');
@@ -111,7 +135,9 @@ function deleteIdeaFromStorage(toBeDeleteID) {
   localStorage.setItem("ideas", JSON.stringify(currentIdeas));
 };
 
-$('.search-field').on('focusout', function(){
+//search function
+
+$('.search-field').on('keyup', function(){
   var searchInputWithSpaces = $(this).val();
   var searchInput = searchInputWithSpaces.trim();
   search(searchInput);
@@ -123,11 +149,10 @@ function search(searchInput) {
     $('.idea-list').find('article:contains(' + searchInput + ')').slideDown();
   } else {
     $('.idea-list').find('article').slideDown();
-  }
-}
+  };
+};
 
-$('.idea-list').on('click', '.remove-idea', removeParent);
-
+//upvote and downvote buttons update quality in the dom and localstorage
 $('.idea-list').on('click', '.upvote', upVote);
 
 $('.idea-list').on('click', '.downvote', downVote)
