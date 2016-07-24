@@ -1,6 +1,6 @@
 var $titleInput = $('.title-input');      // call title input field
 var $bodyInput = $('.body-input');        // call body input field
-var $saveButton = $('.save');             // call save btn
+var $saveButton = $('.save');
 
 onLoad();
 
@@ -10,14 +10,12 @@ function onLoad() {
 };
 
 function checkLocalOrMakeLocal() {
-  debugger;
-  if (localStorage.getItem("ideas") === []) {
+  if (localStorage.getItem("ideas") === null) {
     localStorage.setItem("ideas", JSON.stringify([]))
   };
 };
 
 function populateDOM() {
-  debugger;
   var ideas = getIdeas();
   ideas.forEach(function(idea) {
     makeIdeaCard(idea.id, idea.title, idea.body, idea.quality);
@@ -42,6 +40,10 @@ function getBodyInput() {
   return ideaBody;
 };
 
+function getSearchInput() {
+  var searchInput = $('.search-field').val();
+  return searchInput;
+};
 //put that input stuff into an idea object;
 function makeNewIdea() {
   var newIdea = new Idea(idGenerator(), getTitleInput(), getBodyInput(), 'Swill')
@@ -55,6 +57,8 @@ function makeNewIdea() {
 function getIdeas() {
   return JSON.parse(localStorage.getItem("ideas"));
 };
+
+
 
 //add the stuff to the dom
 function makeIdeaCard(id, title, body, quality) {
@@ -70,11 +74,10 @@ function makeIdeaCard(id, title, body, quality) {
 };
 
 $('.idea-list').on('keyup', '.editable', updateEverything);
-$('.idea-list').on('focusout', '.quality-button', updateEverything);
 
+$('.idea-list').on('blur', '.quality-button', updateEverything);
 
 function updateEverything() {
-  debugger;
   var editedIdeaArticle = $(this).closest('.idea-card');
   var editedIdeaId = parseInt(editedIdeaArticle.attr('id'));
   var editedIdeaTitle = editedIdeaArticle.find('h2.editable').text();
@@ -98,7 +101,6 @@ function removeParent() {
   var idWeWantToDeleteFromStorage = parseInt(ideaArticle.attr("id"));
   deleteIdeaFromStorage(idWeWantToDeleteFromStorage);
   ideaArticle.remove();
-  // updateEverything();
 };
 
 function deleteIdeaFromStorage(toBeDeleteID) {
@@ -109,7 +111,21 @@ function deleteIdeaFromStorage(toBeDeleteID) {
   localStorage.setItem("ideas", JSON.stringify(currentIdeas));
 };
 
-// calls removeParent when clicked
+$('.search-field').on('focusout', function(){
+  var searchInputWithSpaces = $(this).val();
+  var searchInput = searchInputWithSpaces.trim();
+  search(searchInput);
+});
+
+function search(searchInput) {
+  if(searchInput !== "") {
+    $('.idea-list').find('article:not(:contains('+ searchInput + '))').slideUp();
+    $('.idea-list').find('article:contains(' + searchInput + ')').slideDown();
+  } else {
+    $('.idea-list').find('article').slideDown();
+  }
+}
+
 $('.idea-list').on('click', '.remove-idea', removeParent);
 
 $('.idea-list').on('click', '.upvote', upVote);
@@ -130,23 +146,3 @@ function downVote() {
   if (ideaQuality === 'Genius') {ideaArticle.find('.quality-in-DOM').text('Plausible')};
   if (ideaQuality === 'Plausible') {ideaArticle.find('.quality-in-DOM').text('Swill')};
 };
-
-//this needs to grab the text value of the quality-in-DOM field and make it this object's quality attr
-// function saveIdeaQuality() {
-//     var ideaArticle = $(this).closest('.idea-card');
-//     var ideaArticleId = parseInt($(this).closest('article.id'));
-//     var currentIdeas = getIdeas();
-//     deleteIdeaFromStorage(ideaArticleId);
-//
-//
-// };
-
-// var editedIdeaArticle = $(this).closest('.idea-card');
-// var editedIdeaId = parseInt(editedIdeaArticle.attr('id'));
-// var editedIdeaTitle = editedIdeaArticle.find('h2.editable').text();
-// var editedIdeaBody = editedIdeaArticle.find('p.editable').text();
-// deleteIdeaFromStorage(editedIdeaId);
-// var editedIdea = new Idea(editedIdeaId, editedIdeaTitle, editedIdeaBody);
-// var currentIdeas = getIdeas();
-// currentIdeas.push(editedIdea);
-// localStorage.setItem("ideas", JSON.stringify(currentIdeas));
